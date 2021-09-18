@@ -25,6 +25,6 @@ export default [
     url: '/ventas/new',
     name: 'Ventas',
     slug: 'sale-new',
-    icon: 'UserIcon'
+    icon: 'ShoppingCartIcon'
   }
 ]

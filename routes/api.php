@@ -24,8 +24,19 @@ Route::middleware([ 'dynamic'])->group(function () {
         Route::put('users/{id}', 'UsuarioController@update');
     });
 });
+
 Route::middleware('dynamic')->group(function () {
     Route::post('login', 'AuthController@login');
+});
+
+
+//Product API
+
+Route::middleware('dynamic')->group(function () {
+    Route::prefix('product')->group(function () {
+        Route::get('all', 'ProductController@getProductByFilter');
+    });
+
 });
 Route::prefix('empresa')->group(function () {
     Route::get('/', 'EmpresaController@index');
