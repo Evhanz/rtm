@@ -108,134 +108,134 @@
 </template>
 
 <script>
-import vSelect from "vue-select";
+import vSelect from 'vue-select'
 import {
-    Validator,
-    ValidationProvider,
-    ValidationObserver
-} from "vee-validate";
-import axios from "axios";
-import store from "../../store/store";
-import jwt_decode from "jwt-decode";
+  Validator,
+  ValidationProvider,
+  ValidationObserver
+} from 'vee-validate'
+import axios from 'axios'
+import store from '../../store/store'
+import jwt_decode from 'jwt-decode'
 
 const dict = {
-    custom: {
-        empresa: {
-            required: "Por favor, la empresa es requerida"
-        },
-        username: {
-            required: "Por favor, el usuario es requerido"
-        },
-        password: {
-            required: "Por favor, la contraseña es requerida"
-        }
+  custom: {
+    empresa: {
+      required: 'Por favor, la empresa es requerida'
+    },
+    username: {
+      required: 'Por favor, el usuario es requerido'
+    },
+    password: {
+      required: 'Por favor, la contraseña es requerida'
     }
-};
-Validator.localize("en", dict);
+  }
+}
+Validator.localize('en', dict)
 export default {
-    components: {
-        "v-select": vSelect,
-        ValidationProvider,
-        ValidationObserver
-    },
-    data() {
-        return {
-            username: "",
-            password: "",
-            empresa: null,
-            empresas: [],
-            checkbox_remember_me: false
-        };
-    },
-    mounted() {
-        this.getCompanies();
-        console.log(store.state.isAuthenticated);
-    },
-    computed: {
-        validateForm() {
-            return (
-                !this.errors.any() &&
-                this.username !== "" &&
-                this.password !== "" &&
-                this.empresa != null
-            );
-        }
-    },
-    methods: {
-        checkLogin() {
-            // If user is already logged in notify
-            if (this.$store.state.auth.isUserLoggedIn()) {
-                // Close animation if passed as payload
-                // this.$vs.loading.close()
-
-                this.$vs.notify({
-                    title: "Login Attempt",
-                    text: "You are already logged in!",
-                    iconPack: "feather",
-                    icon: "icon-alert-circle",
-                    color: "warning"
-                });
-
-                return false;
-            }
-            return true;
-        },
-        singIn() {
-            try {
-                axios
-                    .post(
-                        "http://localhost:8000/api/login",
-                        {
-                            username: this.username,
-                            password: this.password
-                        },
-                        {
-                            headers: {
-                                company_id: this.empresa
-                            }
-                        }
-                    )
-                    .then(res => {
-                        const { user } = jwt_decode(res.data.data);
-                        const userDefaults = {
-                            uid: user[0].id, // From Auth
-                            displayName: user[0].nombre, // From Auth
-                            about:
-                                "Dessert chocolate cake lemon drops jujubes. Biscuit cupcake ice cream bear claw brownie brownie marshmallow.",
-                            photoURL: require("@assets/images/portrait/small/avatar-s-11.jpg"), // From Auth
-                            status: "online",
-                            userRole: "admin"
-                        };
-
-                        this.$store.dispatch("setUserInfo", userDefaults);
-                        this.$store.dispatch("setToken", res.data.data);
-                        localStorage.setItem("rtmCompany", this.empresa);
-                        this.$router.push({ path: "/" });
-                    })
-                    .catch(error => {
-                        this.$vs.notify({
-                            title: "Error",
-                            text: error.response.data.error,
-                            iconPack: "feather",
-                            icon: "icon-alert-circle",
-                            color: "danger"
-                        });
-                    });
-            } catch (err) {
-                console.log(err);
-            }
-        },
-        getCompanies() {
-            try {
-                axios.get("http://localhost:8000/api/empresa").then(res => {
-                    this.empresas = res.data.data;
-                });
-            } catch (err) {
-                console.log(err);
-            }
-        }
+  components: {
+    'v-select': vSelect,
+    ValidationProvider,
+    ValidationObserver
+  },
+  data () {
+    return {
+      username: '',
+      password: '',
+      empresa: null,
+      empresas: [],
+      checkbox_remember_me: false
     }
-};
+  },
+  mounted () {
+    this.getCompanies()
+    console.log(store.state.isAuthenticated)
+  },
+  computed: {
+    validateForm () {
+      return (
+        !this.errors.any() &&
+                this.username !== '' &&
+                this.password !== '' &&
+                this.empresa != null
+      )
+    }
+  },
+  methods: {
+    checkLogin () {
+      // If user is already logged in notify
+      if (this.$store.state.auth.isUserLoggedIn()) {
+        // Close animation if passed as payload
+        // this.$vs.loading.close()
+
+        this.$vs.notify({
+          title: 'Login Attempt',
+          text: 'You are already logged in!',
+          iconPack: 'feather',
+          icon: 'icon-alert-circle',
+          color: 'warning'
+        })
+
+        return false
+      }
+      return true
+    },
+    singIn () {
+      try {
+        axios
+          .post(
+            'http://localhost:8000/api/login',
+            {
+              username: this.username,
+              password: this.password
+            },
+            {
+              headers: {
+                company_id: this.empresa
+              }
+            }
+          )
+          .then(res => {
+            const { user } = jwt_decode(res.data.data)
+            const userDefaults = {
+              uid: user[0].id, // From Auth
+              displayName: user[0].nombre, // From Auth
+              about:
+                                'Dessert chocolate cake lemon drops jujubes. Biscuit cupcake ice cream bear claw brownie brownie marshmallow.',
+              photoURL: require('@assets/images/portrait/small/avatar-s-11.jpg'), // From Auth
+              status: 'online',
+              userRole: 'admin'
+            }
+
+            this.$store.dispatch('setUserInfo', userDefaults)
+            this.$store.dispatch('setToken', res.data.data)
+            localStorage.setItem('rtmCompany', this.empresa)
+            this.$router.push({ path: '/' })
+          })
+          .catch(error => {
+            this.$vs.notify({
+              title: 'Error',
+              text: error.response.data.error,
+              iconPack: 'feather',
+              icon: 'icon-alert-circle',
+              color: 'danger'
+            })
+          })
+      } catch (err) {
+        console.log(err)
+      }
+    },
+    getCompanies () {
+      try {
+        axios.get('http://localhost:8000/api/empresa').then(res => {
+          this.empresas = res.data.data
+        })
+      } catch (err) {
+        console.log(err)
+      }
+    }
+  }
+}
 </script>
 
 <style lang="scss">

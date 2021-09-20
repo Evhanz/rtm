@@ -31,13 +31,29 @@ Route::middleware('dynamic')->group(function () {
 
 
 //Product API
-
 Route::middleware('dynamic')->group(function () {
     Route::prefix('product')->group(function () {
         Route::get('all', 'ProductController@getProductByFilter');
     });
-
 });
+
+//Client API
+Route::middleware('dynamic')->group(function () {
+    Route::prefix('client')->group(function () {
+        Route::get('all', 'ClientController@getClientByWarehouse');
+    });
+});
+
+//Client API
+Route::middleware('dynamic')->group(function () {
+    Route::prefix('sale')->group(function () {
+        Route::post('store', 'SaleController@store');
+    });
+});
+
+
+
+
 Route::prefix('empresa')->group(function () {
     Route::get('/', 'EmpresaController@index');
 });
