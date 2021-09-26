@@ -91,9 +91,9 @@
                                                 </template>
                                                 </span>
 
-                                                    <span>
-                                                    F. Atencion <input type="date"  v-model="item.dateAtention">
-                                                </span>
+                                                    <span style="color: #ff5656">
+                                                        F. Atencion <input style="color: #ff5656" type="date"  v-model="item.dateAtention">
+                                                    </span>
                                                 </div>
                                             </vs-col>
                                             <vs-col vs-w="5">
