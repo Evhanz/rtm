@@ -117,8 +117,10 @@
                         <vs-divider>
                             Total
                         </vs-divider>
-                        <div style="padding-bottom: 15px;">
-                            <h3>Total: {{totalSale}}</h3>
+
+                        <div style="padding-bottom: 15px; text-align: right">
+                            colocar pago a cuenta
+                            <h3 style="font-size: 40px;color: #ff5656;">Total: {{totalSale}}</h3>
                         </div>
 
                         <vs-button :disabled="totalSale<=0" v-if="!viewHeadSale" style="width: 100%" icon="arrow_forward_ios" color="success" type="filled" @click="showHeadSale">Siguiente</vs-button>
